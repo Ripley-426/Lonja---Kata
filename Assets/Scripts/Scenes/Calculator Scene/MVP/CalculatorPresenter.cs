@@ -1,26 +1,38 @@
-﻿namespace Scenes.Calculator_Scene.MVP
+﻿using UnityEngine;
+
+namespace Scenes.Calculator_Scene.MVP
 {
     public class CalculatorPresenter : ICalculatorPresenter
     {
-        private ICalculatorView _view;
+        private readonly ICalculatorView _view;
         public CalculatorPresenter(ICalculatorView calculatorView)
         {
             _view = calculatorView;
         }
 
-        public void AddNewFish()
+        public void OpenAddNewFishInput()
         {
-            throw new System.NotImplementedException();
+            _view.EnableFishInputPanel();
         }
 
-        public void AddNewSellingSpot()
+        public void OpenAddNewCityInput()
         {
-            throw new System.NotImplementedException();
+            _view.EnableCityInputPanel();
         }
 
         public void CalculateBestSellingSpot()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void AddNewFish(string fishName)
+        {
+            Debug.Log("FISH: " + fishName);
+        }
+
+        public void AddNewCity(string cityName)
+        {
+            Debug.Log("CITY: " + cityName);
         }
     }
 }

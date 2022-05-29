@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Location: ILocation
 {
     private readonly int _distance;
     private readonly string _name;
-    private readonly Dictionary<IProduct, int> _products = new Dictionary<IProduct, int>();
+    private readonly Dictionary<IProduct, int> _productPrices = new Dictionary<IProduct, int>();
 
     public Location(int distance, string name)
     {
@@ -13,7 +14,7 @@ public class Location: ILocation
     }
     public void AddProduct(IProduct product)
     {
-        _products.Add(product, 0);
+        _productPrices.Add(product, 0);
     }
 
     public int GetDistance()
@@ -28,17 +29,32 @@ public class Location: ILocation
 
     public int GetProductsQuantity()
     {
-        return _products.Count;
+        return _productPrices.Count;
     }
 
     public int GetProductPrice(IProduct product)
     {
-        return _products[product];
+        return CalculateDistanceValue(_productPrices[product]);
+    }
+
+    private int CalculateDistanceValue(int productPrice)
+    {
+        return CalculatePercentageOfLostPrice() > 100 ? 0 : ReducePriceByPercentage(productPrice, CalculatePercentageOfLostPrice());
+    }
+
+    private int ReducePriceByPercentage(int productPrice, int percentageOfLostPrice)
+    {
+        return productPrice - (productPrice * percentageOfLostPrice / 100);
+    }
+
+    private int CalculatePercentageOfLostPrice()
+    {
+        return _distance / 100;
     }
 
     public void SetProductPrice(IProduct product, int price)
     {
-        _products[product] = price;
+        _productPrices[product] = price;
     }
 
     public void RemoveProduct(IProduct product)

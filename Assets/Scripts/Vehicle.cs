@@ -4,11 +4,12 @@ using System.Linq;
 public class Vehicle: IVehicle
 {
     private int _totalWeight;
-    private int _capacity = 200;
+    private const int Capacity = 200;
     private Dictionary<IProduct, int> _products = new Dictionary<IProduct, int>();
+    
     public int GetCapacity()
     {
-        return _capacity;
+        return Capacity;
     }
 
     public int GetWeight()
@@ -18,7 +19,7 @@ public class Vehicle: IVehicle
 
     public bool LoadProduct(IProduct product, int weight)
     {
-        if (_totalWeight + weight <= _capacity)
+        if (_totalWeight + weight <= Capacity)
         {
             _totalWeight += weight;
             AddProduct(product, weight);

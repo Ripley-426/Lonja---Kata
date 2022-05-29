@@ -2,8 +2,10 @@
 {
     public interface ICalculatorPresenter
     {
-        void AddNewFish();
-        void AddNewSellingSpot();
+        void OpenAddNewFishInput();
+        void OpenAddNewCityInput();
         void CalculateBestSellingSpot();
+        void AddNewFish(string fishName);
+        void AddNewCity(string cityName);
     }
 }
