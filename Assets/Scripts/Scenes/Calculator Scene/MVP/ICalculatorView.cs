@@ -10,5 +10,6 @@ namespace Scenes.Calculator_Scene.MVP
         IFishPanelScript AddNewFishPanel(string fishName);
         ICityPanelScript AddNewCityPanel(string cityName);
         void CloseInputPanel();
+        void EnableFishWeightPanel();
     }
 }

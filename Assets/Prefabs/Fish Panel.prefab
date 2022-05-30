@@ -369,7 +369,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4092865546620133090}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3907995371918507238}
+        m_TargetAssemblyTypeName: Prefabs.FishPanelScript, ScriptsAssembly
+        m_MethodName: RemoveFish
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5942747269385154153
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +604,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8572846044864026289}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3907995371918507238}
+        m_TargetAssemblyTypeName: Prefabs.FishPanelScript, ScriptsAssembly
+        m_MethodName: ModifyFishQuantity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8572846044864026289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,6 +1361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishName: {fileID: 6051046814774523213}
+  quantity: {fileID: 6051046814334872901}
 --- !u!1 &6051046816016257303
 GameObject:
   m_ObjectHideFlags: 0

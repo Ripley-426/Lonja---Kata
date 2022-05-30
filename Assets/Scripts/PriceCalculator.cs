@@ -51,9 +51,9 @@ public class PriceCalculator: IPriceCalculator
         return bestCity;
     }
 
-    public bool ChangeFishQuantityInVehicle(IFish fishName, int weight)
+    public bool ChangeFishQuantityInVehicle(IFish fish, int weight)
     {
-        return _vehicle.ChangeFishWeight(fishName, weight);
+        return _vehicle.ChangeFishWeight(fish, weight);
     }
 
     public int GetVehicleProductsQuantity()

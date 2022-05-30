@@ -7,5 +7,6 @@
         void CalculateBestSellingSpot();
         void AddNewFish(string fishName);
         void AddNewCity(string cityName);
+        void ModifyFishWeight(string fishWeight);
     }
 }

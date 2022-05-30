@@ -1,3 +1,4 @@
+using System;
 using Prefabs;
 using TMPro;
 using UnityEngine;
@@ -10,8 +11,9 @@ namespace Scenes.Calculator_Scene.MVP
         private ICalculatorPresenter _presenter;
 
         [SerializeField] private GameObject inputPanel;
-        [SerializeField] private TMP_Text inputText;
         [SerializeField] private TMP_InputField inputField;
+        [SerializeField] private TMP_Text inputText;
+        [SerializeField] private TMP_Text placeholderText;
 
         [SerializeField] private GameObject panelToParentFishPrefab;
         [SerializeField] private GameObject fishPrefab;
@@ -36,13 +38,11 @@ namespace Scenes.Calculator_Scene.MVP
         public void AddNewFishButton()
         {
             _presenter.OpenAddNewFishInput();
-            _currentInput = CurrentInput.Fish;
         }
 
         public void AddNewSellingSpotButton()
         {
             _presenter.OpenAddNewCityInput();
-            _currentInput = CurrentInput.City;
         }
 
         public void CalculateBestSellingSpot()
@@ -68,16 +68,25 @@ namespace Scenes.Calculator_Scene.MVP
 
         public void EnableFishInputPanel()
         {
-            SetInputPanelToAskForFish();
-            ActivateInputPanel();
-        }
-        
-        public void EnableCityInputPanel()
-        {
-            SetInputPanelToAskForCity();
+            _currentInput = CurrentInput.Fish;
+            InitializeInputPanel();
             ActivateInputPanel();
         }
 
+        public void EnableCityInputPanel()
+        {
+            _currentInput = CurrentInput.City;
+            InitializeInputPanel();
+            ActivateInputPanel();
+        }
+
+        public void EnableFishWeightPanel()
+        {
+            _currentInput = CurrentInput.ModifyFishWeight;
+            InitializeInputPanel();
+            ActivateInputPanel();
+        }
+        
         public void CloseInputPanel()
         {
             CleanInput();
@@ -86,18 +95,43 @@ namespace Scenes.Calculator_Scene.MVP
 
         public void ConfirmInputButton()
         {
-            if (_currentInput == CurrentInput.Fish)
+            switch (_currentInput)
             {
-                _presenter.AddNewFish(inputField.text);
-            }
-            else
-            {
-                _presenter.AddNewCity(inputField.text);
+                case CurrentInput.Fish:
+                    _presenter.AddNewFish(inputField.text);
+                    break;
+                case CurrentInput.ModifyFishWeight:
+                    _presenter.ModifyFishWeight(inputField.text);
+                    break;
+                case CurrentInput.City:
+                    _presenter.AddNewCity(inputField.text);
+                    break;
+                default:
+                    break;
             }
         }
 
         #region InputMethods
 
+        private void InitializeInputPanel()
+        {
+            CloseInputPanel();
+            switch (_currentInput)
+            {
+                case CurrentInput.Fish:
+                    SetInputPanelToAskForFish();
+                    break;
+                case CurrentInput.City:
+                    SetInputPanelToAskForCity();
+                    break;
+                case CurrentInput.ModifyFishWeight:
+                    SetInputPanelToAskForFishWeight();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
         private void SetInputPanelToAskForFish()
         {
             inputText.text = "Fish name:";
@@ -107,15 +141,23 @@ namespace Scenes.Calculator_Scene.MVP
         {
             inputText.text = "City name:";
         }
+        
+        private void SetInputPanelToAskForFishWeight()
+        {
+            inputText.text = "Fish weight:";
+            placeholderText.text = "Enter fish weight...";
+            inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        }
 
         private void CleanInput()
         {
             inputField.text = "";
+            placeholderText.text = "Enter name...";
+            inputField.contentType = TMP_InputField.ContentType.Name;
         }
 
         private void ActivateInputPanel()
         {
-            CloseInputPanel();
             inputPanel.SetActive(true);
         }
 
@@ -131,5 +173,6 @@ namespace Scenes.Calculator_Scene.MVP
 public enum CurrentInput
 {
     Fish,
+    ModifyFishWeight,
     City
 }
