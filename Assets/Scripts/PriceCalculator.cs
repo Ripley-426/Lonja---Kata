@@ -2,8 +2,8 @@
 
 public class PriceCalculator: IPriceCalculator
 {
-    private readonly List<ILocation> _sellingLocations = new List<ILocation>();
-    private readonly List<IProduct> _products = new List<IProduct>();
+    private readonly List<ICity> _cities = new List<ICity>();
+    private readonly List<IFish> _currentFish = new List<IFish>();
     private readonly IVehicle _vehicle;
 
     public PriceCalculator(IVehicle vehicle)
@@ -11,103 +11,104 @@ public class PriceCalculator: IPriceCalculator
         _vehicle = vehicle;
     }
 
-    public void AddSellingLocation(ILocation location)
+    public void AddCity(ICity city)
     {
-        AddExistingProductsToNewLocation(location);
-        _sellingLocations.Add(location);
+        AddExistingFishToNewCity(city);
+        _cities.Add(city);
     }
 
-    private void AddExistingProductsToNewLocation(ILocation location)
+    private void AddExistingFishToNewCity(ICity city)
     {
-        foreach (IProduct product in _products)
+        foreach (IFish fish in _currentFish)
         {
-            location.AddProduct(product);
+            city.AddFish(fish);
         }
     }
 
-    public int GetSellingLocationsQuantity()
+    public int GetCitiesQuantity()
     {
-        return _sellingLocations.Count;
+        return _cities.Count;
     }
 
-    public void AddProduct(IProduct product)
+    public void AddFish(IFish fish)
     {
-        _products.Add(product);
-        AddNewProductToExistingLocations(product);
+        _currentFish.Add(fish);
+        _vehicle.AddFish(fish);
+        AddNewFishToExistingCities(fish);
     }
 
-    public ILocation GetBestLocationToSell()
+    public ICity GetBestCityToSell()
     {
-        ILocation bestLocation = new Location(0, "There is no good place to sell.");
-        int bestLocationPrice = 0;
-        foreach (ILocation location in _sellingLocations)
+        ICity bestCity = new City("There is no good city to sell.");
+        int bestCityPrice = 0;
+        foreach (ICity city in _cities)
         {
-            int locationPrice = CalculateLocationPrice(location);
-            if (locationPrice <= bestLocationPrice) continue;
-            bestLocation = location;
-            bestLocationPrice = locationPrice;
+            int cityPrice = CalculateCityPrice(city);
+            if (cityPrice <= bestCityPrice) continue;
+            bestCity = city;
+            bestCityPrice = cityPrice;
         }
-        return bestLocation;
+        return bestCity;
     }
 
-    public void AddProductToVehicle(IProduct product, int weight)
+    public bool ChangeFishQuantityInVehicle(IFish fishName, int weight)
     {
-        _vehicle.AddProduct(product, weight);
+        return _vehicle.ChangeFishWeight(fishName, weight);
     }
 
-    public int GetVanProductsQuantity()
+    public int GetVehicleProductsQuantity()
     {
         return _vehicle.GetProductsQuantity();
     }
 
-    public void RemoveLocation(ILocation location)
+    public void RemoveCity(ICity city)
     {
-        _sellingLocations.Remove(location);
+        _cities.Remove(city);
     }
 
-    public void RemoveProduct(IProduct product)
+    public void RemoveFish(IFish fishName)
     {
-        RemoveProductFromProductsList(product);
-        RemoveProductFromExistingLocations(product);
+        RemoveFishFromCurrentFish(fishName);
+        RemoveFishFromExistingCities(fishName);
     }
 
-    private void RemoveProductFromProductsList(IProduct product)
+    private void RemoveFishFromCurrentFish(IFish fish)
     {
-        _products.Remove(product);
+        _currentFish.Remove(fish);
     }
 
-    private void RemoveProductFromExistingLocations(IProduct product)
+    private void RemoveFishFromExistingCities(IFish fish)
     {
-        foreach (ILocation sellingLocation in _sellingLocations)
+        foreach (ICity city in _cities)
         {
-            sellingLocation.RemoveProduct(product);
+            city.RemoveFish(fish);
         }
     }
 
-    private int CalculateLocationPrice(ILocation location)
+    private int CalculateCityPrice(ICity city)
     {
-        int locationPrice = 0;
+        int cityPrice = 0;
         
-        foreach (KeyValuePair<IProduct, int> productKeyValue in _vehicle.GetProductsAndQuantity())
+        foreach (KeyValuePair<IFish, int> fishKeyValue in _vehicle.GetProductsAndQuantity())
         {
-            IProduct product = productKeyValue.Key;
-            int quantity = productKeyValue.Value;
-            locationPrice += location.GetProductPrice(product) * quantity;
+            IFish fish = fishKeyValue.Key;
+            int quantity = fishKeyValue.Value;
+            cityPrice += city.GetFishPrice(fish) * quantity;
         }
 
-        return locationPrice;
+        return cityPrice;
     }
 
-    private void AddNewProductToExistingLocations(IProduct product)
+    private void AddNewFishToExistingCities(IFish fishName)
     {
-        foreach (ILocation location in _sellingLocations)
+        foreach (ICity city in _cities)
         {
-            location.AddProduct(product);
+            city.AddFish(fishName);
         }
     }
 
-    public int GetProductsQuantity()
+    public int GetCurrentFishQuantity()
     {
-        return _products.Count;
+        return _currentFish.Count;
     }
 }

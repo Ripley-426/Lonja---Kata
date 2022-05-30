@@ -3,7 +3,8 @@
 public interface IVehicle
 {
     int GetProductsQuantity();
-    void AddProduct(IProduct product, int weight);
-    List<IProduct> GetProducts();
-    Dictionary<IProduct, int> GetProductsAndQuantity();
+    void AddFish(IFish fish);
+    List<IFish> GetFish();
+    Dictionary<IFish, int> GetProductsAndQuantity();
+    bool ChangeFishWeight(IFish fishName, int weight);
 }

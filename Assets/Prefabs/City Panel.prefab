@@ -160,6 +160,41 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 10
   m_LayoutPriority: 1
+--- !u!1 &1286937726386170572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169598046211307681}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &169598046211307681
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7638499507791322820, guid: 57301fbe61ae1704c8be1d66e54ff7ec, type: 3}
+  m_PrefabInstance: {fileID: 7519866041764390501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286937726386170572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3060412400904267828}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2841249127219745119
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +225,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 169598046211307681}
+  - {fileID: 1436155195788956720}
   m_Father: {fileID: 7105172422499624055}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -226,6 +262,36 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 80
   m_LayoutPriority: 1
+--- !u!1 &5006155392666721440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1436155195788956720}
+  m_Layer: 0
+  m_Name: Fish Scroll View (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1436155195788956720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006155392666721440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3060412400904267828}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5744520708369594997
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +655,7 @@ GameObject:
   - component: {fileID: 7105172422499624055}
   - component: {fileID: 7105172422499624041}
   - component: {fileID: 7614100996973605228}
+  - component: {fileID: 5242955175391774281}
   m_Layer: 5
   m_Name: City Panel
   m_TagString: Untagged
@@ -652,6 +719,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5242955175391774281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7105172422499624054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f500ac70444bb0af422557f4f7bdc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cityName: {fileID: 572585520102530098}
 --- !u!1 &7929694473007090084
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Distance: 999km'
+  m_text: 'Distance: 0km'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eb2cb465c843cb34685424938b914384, type: 2}
   m_sharedMaterial: {fileID: -5479155423547150522, guid: eb2cb465c843cb34685424938b914384, type: 2}
@@ -744,7 +824,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.9
+  m_fontSize: 58.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1255,8 +1335,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57301fbe61ae1704c8be1d66e54ff7ec, type: 3}
---- !u!224 &169598046211307681 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7638499507791322820, guid: 57301fbe61ae1704c8be1d66e54ff7ec, type: 3}
-  m_PrefabInstance: {fileID: 7519866041764390501}
-  m_PrefabAsset: {fileID: 0}

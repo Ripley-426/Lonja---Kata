@@ -5,7 +5,7 @@ public class Vehicle: IVehicle
 {
     private int _totalWeight;
     private const int Capacity = 200;
-    private Dictionary<IProduct, int> _products = new Dictionary<IProduct, int>();
+    private readonly Dictionary<IFish, int> _currentFish = new Dictionary<IFish, int>();
     
     public int GetCapacity()
     {
@@ -17,12 +17,12 @@ public class Vehicle: IVehicle
         return _totalWeight;
     }
 
-    public bool LoadProduct(IProduct product, int weight)
+    public bool LoadProduct(IFish fish, int weight)
     {
         if (_totalWeight + weight <= Capacity)
         {
             _totalWeight += weight;
-            AddProduct(product, weight);
+            AddFish(fish);
             return true;
         }
         else
@@ -33,21 +33,29 @@ public class Vehicle: IVehicle
 
     public int GetProductsQuantity()
     {
-        return _products.Count;
+        return _currentFish.Count;
     }
 
-    public void AddProduct(IProduct product, int weight)
+    public void AddFish(IFish fish)
     {
-        _products.Add(product, weight);
+        _currentFish.Add(fish, 0);
     }
 
-    public List<IProduct> GetProducts()
+    public List<IFish> GetFish()
     {
-        return _products.Keys.ToList();
+        return _currentFish.Keys.ToList();
     }
 
-    public Dictionary<IProduct, int> GetProductsAndQuantity()
+    public Dictionary<IFish, int> GetProductsAndQuantity()
     {
-        return _products;
+        return _currentFish;
+    }
+
+    public bool ChangeFishWeight(IFish fish, int weight)
+    {
+        if (_totalWeight + weight - _currentFish[fish] > Capacity) return false;
+        _totalWeight += weight;
+        _currentFish[fish] = weight;
+        return true;
     }
 }

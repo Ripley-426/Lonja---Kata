@@ -1,12 +1,12 @@
 ﻿public interface IPriceCalculator
 {
-    void AddSellingLocation(ILocation location);
-    int GetSellingLocationsQuantity();
-    int GetProductsQuantity();
-    void AddProduct(IProduct product);
-    ILocation GetBestLocationToSell();
-    void AddProductToVehicle(IProduct product, int weight);
-    int GetVanProductsQuantity();
-    void RemoveLocation(ILocation location);
-    void RemoveProduct(IProduct product);
+    void AddCity(ICity city);
+    int GetCitiesQuantity();
+    int GetCurrentFishQuantity();
+    void AddFish(IFish fishName);
+    ICity GetBestCityToSell();
+    bool ChangeFishQuantityInVehicle(IFish fishName, int weight);
+    int GetVehicleProductsQuantity();
+    void RemoveCity(ICity cityName);
+    void RemoveFish(IFish fish);
 }

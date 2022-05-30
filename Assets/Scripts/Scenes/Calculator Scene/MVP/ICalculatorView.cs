@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Prefabs;
+using UnityEngine;
 
 namespace Scenes.Calculator_Scene.MVP
 {
@@ -6,5 +7,8 @@ namespace Scenes.Calculator_Scene.MVP
     {
         void EnableFishInputPanel();
         void EnableCityInputPanel();
+        IFishPanelScript AddNewFishPanel(string fishName);
+        ICityPanelScript AddNewCityPanel(string cityName);
+        void CloseInputPanel();
     }
 }

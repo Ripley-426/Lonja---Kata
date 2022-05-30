@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class FishPanelScript : MonoBehaviour
+namespace Prefabs
 {
-    // Start is called before the first frame update
-    void Start()
+    public class FishPanelScript : MonoBehaviour, IFishPanelScript
     {
-        
-    }
+        [SerializeField] private TMP_Text fishName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void SetName(string newFishName)
+        {
+            fishName.text = newFishName;
+        }
+
+        public void ChangeQuantity()
+        {
+            //_presenter.ChangeFishQuantity(GetName());
+        }
+
+        private string GetName()
+        {
+            return fishName.text;
+        }
     }
 }

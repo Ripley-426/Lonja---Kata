@@ -1,3 +1,4 @@
+using Prefabs;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +28,9 @@ namespace Scenes.Calculator_Scene.MVP
 
         private void Awake()
         {
-            _presenter = new CalculatorPresenter(this);
+            Vehicle vehicle = new Vehicle();
+            PriceCalculator calculator = new PriceCalculator(vehicle);
+            _presenter = new CalculatorPresenter(this, calculator);
         }
 
         public void AddNewFishButton()
@@ -47,6 +50,22 @@ namespace Scenes.Calculator_Scene.MVP
             _presenter.CalculateBestSellingSpot();
         }
 
+        public IFishPanelScript AddNewFishPanel(string fishName)
+        {
+            GameObject newFishPanel = Instantiate(fishPrefab, panelToParentFishPrefab.transform);
+            newFishPanel.name = fishName;
+            FishPanelScript newFishPanelScript = newFishPanel.GetComponent<FishPanelScript>();
+            return newFishPanelScript;
+        }
+
+        public ICityPanelScript AddNewCityPanel(string cityName)
+        {
+            GameObject newCityPanel = Instantiate(cityPrefab, panelToParentCityPrefab.transform);
+            newCityPanel.name = cityName;
+            CityPanelScript newCityPanelScript = newCityPanel.GetComponent<CityPanelScript>();
+            return newCityPanelScript;
+        }
+
         public void EnableFishInputPanel()
         {
             SetInputPanelToAskForFish();
@@ -59,35 +78,10 @@ namespace Scenes.Calculator_Scene.MVP
             ActivateInputPanel();
         }
 
-        private void SetInputPanelToAskForFish()
-        {
-            inputText.text = "Fish name:";
-        }
-
-        private void SetInputPanelToAskForCity()
-        {
-            inputText.text = "City name:";
-        }
-
         public void CloseInputPanel()
         {
             CleanInput();
             DeactivateInputPanel();
-        }
-
-        private void CleanInput()
-        {
-            inputField.text = "";
-        }
-
-        private void ActivateInputPanel()
-        {
-            inputPanel.SetActive(true);
-        }
-
-        private void DeactivateInputPanel()
-        {
-            inputPanel.SetActive(false);
         }
 
         public void ConfirmInputButton()
@@ -101,6 +95,36 @@ namespace Scenes.Calculator_Scene.MVP
                 _presenter.AddNewCity(inputField.text);
             }
         }
+
+        #region InputMethods
+
+        private void SetInputPanelToAskForFish()
+        {
+            inputText.text = "Fish name:";
+        }
+
+        private void SetInputPanelToAskForCity()
+        {
+            inputText.text = "City name:";
+        }
+
+        private void CleanInput()
+        {
+            inputField.text = "";
+        }
+
+        private void ActivateInputPanel()
+        {
+            CloseInputPanel();
+            inputPanel.SetActive(true);
+        }
+
+        private void DeactivateInputPanel()
+        {
+            inputPanel.SetActive(false);
+        }
+
+        #endregion
     }
 }
 

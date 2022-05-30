@@ -6,13 +6,13 @@ namespace Tests
     public class VehicleShould
     {
         private Vehicle _vehicle;
-        private IProduct _baseProduct;
+        private IFish _baseFish;
 
         [SetUp]
         public void Setup()
         {
             _vehicle = new Vehicle();
-            _baseProduct = Substitute.For<IProduct>();
+            _baseFish = Substitute.For<IFish>();
         }
         
         [Test]
@@ -24,7 +24,8 @@ namespace Tests
         [Test]
         public void IncreaseWeightWhenAddingProducts()
         {
-            _vehicle.LoadProduct(_baseProduct, 50);
+            _vehicle.AddFish(_baseFish);
+            _vehicle.ChangeFishWeight(_baseFish, 50);
             
             Assert.AreEqual(50, _vehicle.GetWeight());
         }
@@ -32,7 +33,7 @@ namespace Tests
         [Test]
         public void NotAcceptProductIfWeightWouldBeHigherThanCapacity()
         {
-            _vehicle.LoadProduct(_baseProduct, 300);
+            _vehicle.LoadProduct(_baseFish, 300);
             
             Assert.AreEqual(0, _vehicle.GetWeight());
         }
@@ -40,7 +41,7 @@ namespace Tests
         [Test]
         public void BeAbleToAddProducts()
         {
-            _vehicle.AddProduct(_baseProduct, 30);
+            _vehicle.AddFish(_baseFish);
             Assert.AreEqual(1, _vehicle.GetProductsQuantity());
         }
     }

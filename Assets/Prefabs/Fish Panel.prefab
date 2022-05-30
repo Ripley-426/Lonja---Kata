@@ -781,7 +781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eb2cb465c843cb34685424938b914384, type: 2}
   m_sharedMaterial: {fileID: -5479155423547150522, guid: eb2cb465c843cb34685424938b914384, type: 2}
@@ -1336,6 +1336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e678bef97805ba5429a5642825d1aeb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishName: {fileID: 6051046814774523213}
 --- !u!1 &6051046816016257303
 GameObject:
   m_ObjectHideFlags: 0
