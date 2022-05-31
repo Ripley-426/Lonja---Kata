@@ -1362,6 +1362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishName: {fileID: 6051046814774523213}
   quantity: {fileID: 6051046814334872901}
+  deleteButtonPanel: {fileID: 1224951395915965509}
 --- !u!1 &6051046816016257303
 GameObject:
   m_ObjectHideFlags: 0

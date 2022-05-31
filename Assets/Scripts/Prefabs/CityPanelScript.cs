@@ -39,6 +39,7 @@ namespace Prefabs
             newFishPanel.name = fishName;
             FishPanelScript newFishPanelScript = newFishPanel.GetComponent<FishPanelScript>();
             newFishPanelScript.SetName(fishName);
+            newFishPanelScript.DisableDeleteButtonIfInCity();
             newFishPanelScript.SetCity(cityName.text);
             newFishPanelScript.SetScriptToHandlePanel(_fishPanelHandler);
             _currentFish.Add(fishName, newFishPanelScript);

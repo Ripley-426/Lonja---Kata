@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core.Internal;
 using Prefabs;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Scenes.Calculator_Scene.MVP
         private readonly IPriceCalculator _priceCalculator;
         private readonly Dictionary<IFish, IFishPanelScript> _fishInStock = new Dictionary<IFish, IFishPanelScript>();
         private readonly Dictionary<ICity, ICityPanelScript> _cities = new Dictionary<ICity, ICityPanelScript>();
+        private ITop3CityPanelScript[] _currentTop3CityPanels;
 
         private string _currentFish = "";
         private string _currentCity = "";
@@ -58,7 +60,32 @@ namespace Scenes.Calculator_Scene.MVP
 
         public void CalculateBestSellingSpot()
         {
-            Debug.Log(_priceCalculator.GetBestCityToSell().GetName());
+            Top3Cities top3Cities = _priceCalculator.GetBestCityToSell();
+            if (_currentTop3CityPanels.IsNullOrEmpty())
+            {
+                InstantiateAndFillTop3Cities(top3Cities);
+            }
+            else
+            {
+                FillTop3Cities(top3Cities);
+            }
+        }
+
+        private void InstantiateAndFillTop3Cities(Top3Cities top3Cities)
+        {
+            _currentTop3CityPanels = new ITop3CityPanelScript[3];
+            _currentTop3CityPanels[0] = _view.InstantiateFirstPlacePanel();
+            _currentTop3CityPanels[1] = _view.InstantiateSecondPlacePanel();
+            _currentTop3CityPanels[2] = _view.InstantiateThirdPlacePanel();
+
+            FillTop3Cities(top3Cities);
+        }
+
+        private void FillTop3Cities(Top3Cities top3Cities)
+        {
+            _currentTop3CityPanels[0].Setup(1, top3Cities.firstPlaceName, top3Cities.firstPlaceEarnings.ToString());
+            _currentTop3CityPanels[1].Setup(2, top3Cities.secondPlaceName, top3Cities.secondPlaceEarnings.ToString());
+            _currentTop3CityPanels[2].Setup(3, top3Cities.thirdPlaceName, top3Cities.thirdPlaceEarnings.ToString());
         }
 
         public void AddNewFish(string fishName)
@@ -80,7 +107,6 @@ namespace Scenes.Calculator_Scene.MVP
             _priceCalculator.AddFish(newFish);
 
             _view.CloseInputPanel();
-            Debug.Log("FISH: " + fishName);
         }
 
         public void ModifyFishWeight(string fishWeight)
@@ -168,7 +194,6 @@ namespace Scenes.Calculator_Scene.MVP
             _priceCalculator.AddCity(newCity);
             
             _view.CloseInputPanel();
-            Debug.Log("CITY: " + cityName);
         }
 
         private ICity GetCity(string cityName)

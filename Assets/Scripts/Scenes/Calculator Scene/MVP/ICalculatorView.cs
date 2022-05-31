@@ -15,5 +15,8 @@ namespace Scenes.Calculator_Scene.MVP
         void SetMaxWeight(string weight);
         void EnableModifyCityDistanceInputPanel();
         void EnableFishPriceInputPanel();
+        ITop3CityPanelScript InstantiateFirstPlacePanel();
+        ITop3CityPanelScript InstantiateSecondPlacePanel();
+        ITop3CityPanelScript InstantiateThirdPlacePanel();
     }
 }

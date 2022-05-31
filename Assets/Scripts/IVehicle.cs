@@ -8,4 +8,5 @@ public interface IVehicle
     Dictionary<IFish, int> GetProductsAndQuantity();
     bool ChangeFishWeight(IFish fishName, int weight);
     void SetCapacity(int weight);
+    void RemoveFish(IFish fish);
 }

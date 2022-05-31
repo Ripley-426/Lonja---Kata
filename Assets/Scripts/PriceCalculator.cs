@@ -37,18 +37,15 @@ public class PriceCalculator: IPriceCalculator
         AddNewFishToExistingCities(fish);
     }
 
-    public ICity GetBestCityToSell()
+    public Top3Cities GetBestCityToSell()
     {
-        ICity bestCity = new City("There is no good city to sell.");
-        int bestCityPrice = 0;
+        Top3Cities top3Cities = new Top3Cities();
         foreach (ICity city in _cities)
         {
             int cityPrice = CalculateCityPrice(city);
-            if (cityPrice <= bestCityPrice) continue;
-            bestCity = city;
-            bestCityPrice = cityPrice;
+            top3Cities.CheckIfTop3(city.GetName(), cityPrice);
         }
-        return bestCity;
+        return top3Cities;
     }
 
     public bool ChangeFishQuantityInVehicle(IFish fish, int weight)
@@ -66,10 +63,11 @@ public class PriceCalculator: IPriceCalculator
         _cities.Remove(city);
     }
 
-    public void RemoveFish(IFish fishName)
+    public void RemoveFish(IFish fish)
     {
-        RemoveFishFromCurrentFish(fishName);
-        RemoveFishFromExistingCities(fishName);
+        _vehicle.RemoveFish(fish);
+        RemoveFishFromCurrentFish(fish);
+        RemoveFishFromExistingCities(fish);
     }
 
     public void ChangeVehicleCapacity(int weight)

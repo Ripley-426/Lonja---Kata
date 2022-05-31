@@ -63,4 +63,9 @@ public class Vehicle: IVehicle
     {
         _totalWeight = weight;
     }
+
+    public void RemoveFish(IFish fish)
+    {
+        _currentFish.Remove(fish);
+    }
 }

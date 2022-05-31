@@ -8,6 +8,7 @@ namespace Prefabs
     {
         [SerializeField] private TMP_Text fishName;
         [SerializeField] private TMP_Text quantity;
+        [SerializeField] private GameObject deleteButtonPanel;
         private string _city = "";
         private IFishPanelHandler _fishPanelHandler;
 
@@ -51,9 +52,9 @@ namespace Prefabs
             Destroy(gameObject);
         }
 
-        public void ChangeQuantity()
+        public void DisableDeleteButtonIfInCity()
         {
-            //_presenter.ChangeFishQuantity(GetName());
+            deleteButtonPanel.SetActive(false);
         }
 
         private string GetName()

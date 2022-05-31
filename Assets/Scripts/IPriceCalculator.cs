@@ -4,7 +4,7 @@
     int GetCitiesQuantity();
     int GetCurrentFishQuantity();
     void AddFish(IFish fishName);
-    ICity GetBestCityToSell();
+    Top3Cities GetBestCityToSell();
     bool ChangeFishQuantityInVehicle(IFish fish, int weight);
     int GetVehicleProductsQuantity();
     void RemoveCity(ICity cityName);

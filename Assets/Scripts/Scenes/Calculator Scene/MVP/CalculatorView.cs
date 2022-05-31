@@ -239,6 +239,30 @@ namespace Scenes.Calculator_Scene.MVP
         }
 
         #endregion
+        
+        public ITop3CityPanelScript InstantiateFirstPlacePanel()
+        {
+            GameObject firstPlaceGO = Instantiate(top3CityPrefab, firstPlacePanel.transform);
+            firstPlaceGO.name = "First Place";
+            ITop3CityPanelScript top3CityPanelScript = firstPlaceGO.GetComponent<ITop3CityPanelScript>();
+            return top3CityPanelScript;
+        }
+        
+        public ITop3CityPanelScript InstantiateSecondPlacePanel()
+        {
+            GameObject secondPlaceGO = Instantiate(top3CityPrefab, secondPlacePanel.transform);
+            secondPlaceGO.name = "Second Place";
+            ITop3CityPanelScript top3CityPanelScript = secondPlaceGO.GetComponent<ITop3CityPanelScript>();
+            return top3CityPanelScript;
+        }
+        
+        public ITop3CityPanelScript InstantiateThirdPlacePanel()
+        {
+            GameObject thirdPlaceGO = Instantiate(top3CityPrefab, thirdPlacePanel.transform);
+            thirdPlaceGO.name = "Third Place";
+            ITop3CityPanelScript top3CityPanelScript = thirdPlaceGO.GetComponent<ITop3CityPanelScript>();
+            return top3CityPanelScript;
+        }
     }
 }
 
