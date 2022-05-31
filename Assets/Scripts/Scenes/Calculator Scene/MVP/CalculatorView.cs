@@ -15,6 +15,8 @@ namespace Scenes.Calculator_Scene.MVP
         [SerializeField] private TMP_Text inputText;
         [SerializeField] private TMP_Text placeholderText;
 
+        [SerializeField] private TMP_Text maxWeightText;
+
         [SerializeField] private GameObject panelToParentFishPrefab;
         [SerializeField] private GameObject fishPrefab;
 
@@ -45,9 +47,14 @@ namespace Scenes.Calculator_Scene.MVP
             _presenter.OpenAddNewCityInput();
         }
 
-        public void CalculateBestSellingSpot()
+        public void CalculateBestSellingSpotButton()
         {
             _presenter.CalculateBestSellingSpot();
+        }
+
+        public void ModifyMaxWeightButton()
+        {
+            _presenter.OpenModifyMaxWeightInput();
         }
 
         public IFishPanelScript AddNewFishPanel(string fishName)
@@ -69,24 +76,50 @@ namespace Scenes.Calculator_Scene.MVP
         public void EnableFishInputPanel()
         {
             _currentInput = CurrentInput.Fish;
-            InitializeInputPanel();
-            ActivateInputPanel();
+            InitializeAndActivateInputPanel();
         }
 
         public void EnableCityInputPanel()
         {
             _currentInput = CurrentInput.City;
+            InitializeAndActivateInputPanel();
+        }
+
+        public void EnableFishWeightInputPanel()
+        {
+            _currentInput = CurrentInput.ModifyFishWeight;
+            InitializeAndActivateInputPanel();
+        }
+
+        public void EnableMaxWeightInputPanel()
+        {
+            _currentInput = CurrentInput.MaxWeight;
+            InitializeAndActivateInputPanel();
+        }
+
+        public void SetMaxWeight(string weight)
+        {
+            maxWeightText.text = $"Max Weight: {weight}kg";
+        }
+
+        public void EnableModifyCityDistanceInputPanel()
+        {
+            _currentInput = CurrentInput.CityDistance;
+            InitializeAndActivateInputPanel();
+        }
+
+        public void EnableFishPriceInputPanel()
+        {
+            _currentInput = CurrentInput.FishPrice;
+            InitializeAndActivateInputPanel();
+        }
+
+        private void InitializeAndActivateInputPanel()
+        {
             InitializeInputPanel();
             ActivateInputPanel();
         }
 
-        public void EnableFishWeightPanel()
-        {
-            _currentInput = CurrentInput.ModifyFishWeight;
-            InitializeInputPanel();
-            ActivateInputPanel();
-        }
-        
         public void CloseInputPanel()
         {
             CleanInput();
@@ -105,6 +138,15 @@ namespace Scenes.Calculator_Scene.MVP
                     break;
                 case CurrentInput.City:
                     _presenter.AddNewCity(inputField.text);
+                    break;
+                case CurrentInput.MaxWeight:
+                    _presenter.ModifyMaxWeight(inputField.text);
+                    break;
+                case CurrentInput.CityDistance:
+                    _presenter.ModifyCityDistance(inputField.text);
+                    break;
+                case CurrentInput.FishPrice:
+                    _presenter.ModifyFishPrice(inputField.text);
                     break;
                 default:
                     break;
@@ -127,11 +169,20 @@ namespace Scenes.Calculator_Scene.MVP
                 case CurrentInput.ModifyFishWeight:
                     SetInputPanelToAskForFishWeight();
                     break;
+                case CurrentInput.MaxWeight:
+                    SetInputPanelToAskForMaxWeight();
+                    break;
+                case CurrentInput.CityDistance:
+                    SetInputPanelToAskForCityDistance();
+                    break;
+                case CurrentInput.FishPrice:
+                    SetInputPanelToAskForFishPrice();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         private void SetInputPanelToAskForFish()
         {
             inputText.text = "Fish name:";
@@ -146,6 +197,27 @@ namespace Scenes.Calculator_Scene.MVP
         {
             inputText.text = "Fish weight:";
             placeholderText.text = "Enter fish weight...";
+            inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        }
+
+        private void SetInputPanelToAskForMaxWeight()
+        {
+            inputText.text = "Max weight:";
+            placeholderText.text = "Enter max weight...";
+            inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        }
+
+        private void SetInputPanelToAskForFishPrice()
+        {
+            inputText.text = "Fish price:";
+            placeholderText.text = "Enter fish price...";
+            inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
+        }
+
+        private void SetInputPanelToAskForCityDistance()
+        {
+            inputText.text = "City Distance:";
+            placeholderText.text = "Enter city distance...";
             inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
         }
 
@@ -174,5 +246,8 @@ public enum CurrentInput
 {
     Fish,
     ModifyFishWeight,
-    City
+    MaxWeight,
+    City,
+    CityDistance,
+    FishPrice
 }

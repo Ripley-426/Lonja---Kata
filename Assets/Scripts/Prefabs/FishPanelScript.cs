@@ -8,6 +8,7 @@ namespace Prefabs
     {
         [SerializeField] private TMP_Text fishName;
         [SerializeField] private TMP_Text quantity;
+        private string _city = "";
         private IFishPanelHandler _fishPanelHandler;
 
         public void SetName(string newFishName)
@@ -17,12 +18,22 @@ namespace Prefabs
 
         public void SetQuantity(string newQuantity)
         {
-            quantity.text = newQuantity;
+            quantity.text = $"{newQuantity}kg";
         }
 
-        public void SetScriptToRemoveFish(IFishPanelHandler panelHandler)
+        public void SetScriptToHandlePanel(IFishPanelHandler panelHandler)
         {
             _fishPanelHandler = panelHandler;
+        }
+
+        public void SetPrice(string fishPrice)
+        {
+            quantity.text = $"${fishPrice}";
+        }
+
+        public void SetCity(string city)
+        {
+            _city = city;
         }
 
         public void RemoveFish()
@@ -32,7 +43,7 @@ namespace Prefabs
 
         public void ModifyFishQuantity()
         {
-            _fishPanelHandler.OpenModifyFishQuantityPanel(GetName());
+            _fishPanelHandler.OpenModifyFishQuantityInput(GetName(), _city);
         }
 
         public void DestroyPanel()

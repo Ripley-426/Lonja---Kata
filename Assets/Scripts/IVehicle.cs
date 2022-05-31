@@ -7,4 +7,5 @@ public interface IVehicle
     List<IFish> GetFish();
     Dictionary<IFish, int> GetProductsAndQuantity();
     bool ChangeFishWeight(IFish fishName, int weight);
+    void SetCapacity(int weight);
 }

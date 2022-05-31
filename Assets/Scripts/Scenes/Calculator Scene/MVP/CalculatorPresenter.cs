@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Prefabs;
 using UnityEngine;
 
 namespace Scenes.Calculator_Scene.MVP
 {
-    public class CalculatorPresenter : ICalculatorPresenter, IFishPanelHandler
+    public class CalculatorPresenter : ICalculatorPresenter, IFishPanelHandler, ICityPanelHandler
     {
         private readonly ICalculatorView _view;
         private readonly IPriceCalculator _priceCalculator;
@@ -13,6 +14,7 @@ namespace Scenes.Calculator_Scene.MVP
         private readonly Dictionary<ICity, ICityPanelScript> _cities = new Dictionary<ICity, ICityPanelScript>();
 
         private string _currentFish = "";
+        private string _currentCity = "";
         public CalculatorPresenter(ICalculatorView calculatorView, IPriceCalculator priceCalculator)
         {
             _view = calculatorView;
@@ -29,10 +31,29 @@ namespace Scenes.Calculator_Scene.MVP
             _view.EnableCityInputPanel();
         }
 
-        public void OpenModifyFishQuantityPanel(string fishName)
+        public void OpenModifyMaxWeightInput()
+        {
+            _view.EnableMaxWeightInputPanel();
+        }
+
+        public void OpenModifyFishQuantityInput(string fishName, string cityName)
         {
             _currentFish = fishName;
-            _view.EnableFishWeightPanel();
+            _currentCity = cityName;
+            if (cityName == "")
+            {
+                _view.EnableFishWeightInputPanel();
+            }
+            else
+            {
+                _view.EnableFishPriceInputPanel();
+            }
+        }
+
+        public void OpenModifyCityDistanceInput(string cityName)
+        {
+            _currentCity = cityName;
+            _view.EnableModifyCityDistanceInputPanel();
         }
 
         public void CalculateBestSellingSpot()
@@ -49,7 +70,11 @@ namespace Scenes.Calculator_Scene.MVP
             
             IFishPanelScript newFishPanelScript = _view.AddNewFishPanel(fishName);
             newFishPanelScript.SetName(fishName);
-            newFishPanelScript.SetScriptToRemoveFish(this);
+            newFishPanelScript.SetScriptToHandlePanel(this);
+            foreach (ICityPanelScript city in _cities.Values)
+            {
+                city.AddFish(fishName);
+            }
             _fishInStock.Add(newFish, newFishPanelScript);
 
             _priceCalculator.AddFish(newFish);
@@ -66,9 +91,16 @@ namespace Scenes.Calculator_Scene.MVP
             _view.CloseInputPanel();
         }
 
+        public void ModifyFishPrice(string fishPrice)
+        {
+            _cities[GetCity(_currentCity)].SetFishPrice(_currentFish, fishPrice);
+            _view.CloseInputPanel();
+        }
+
         public void RemoveFish(string fishName)
         {
             RemoveFishPanel(fishName);
+            RemoveFishPanelFromCities(fishName);
             RemoveFishFromCalculator(fishName);
             RemoveFishFromList(fishName);
         }
@@ -76,6 +108,14 @@ namespace Scenes.Calculator_Scene.MVP
         private void RemoveFishPanel(string fishName)
         {
             _fishInStock[GetFish(fishName)].DestroyPanel();
+        }
+
+        private void RemoveFishPanelFromCities(string fishName)
+        {
+            foreach (ICityPanelScript cityPanelScript in _cities.Values)
+            {
+                cityPanelScript.RemoveFish(fishName);
+            }
         }
 
         private void RemoveFishFromCalculator(string fishName)
@@ -93,6 +133,20 @@ namespace Scenes.Calculator_Scene.MVP
             return _fishInStock.First(fish => fish.Key.GetName() == fishName).Key;
         }
 
+        public void ModifyMaxWeight(string newMaxWeight)
+        {
+            _priceCalculator.ChangeVehicleCapacity(int.Parse(newMaxWeight));
+            _view.SetMaxWeight(newMaxWeight);
+            _view.CloseInputPanel();
+        }
+
+        public void ModifyCityDistance(string distance)
+        {
+            if (distance == "") return;
+            _cities[GetCity(_currentCity)].SetDistance(distance);
+            _view.CloseInputPanel();
+        }
+
         public void AddNewCity(string cityName)
         {
             if (cityName == "") return;
@@ -102,6 +156,11 @@ namespace Scenes.Calculator_Scene.MVP
             
             ICityPanelScript newCityPanelScript = _view.AddNewCityPanel(cityName);
             newCityPanelScript.SetName(cityName);
+            newCityPanelScript.SetScriptToModifyDistance(this, this);
+            foreach (IFish fish in _fishInStock.Keys)
+            {
+                newCityPanelScript.AddFish(fish.GetName());
+            }
             _cities.Add(newCity, newCityPanelScript);
             
             _priceCalculator.AddCity(newCity);

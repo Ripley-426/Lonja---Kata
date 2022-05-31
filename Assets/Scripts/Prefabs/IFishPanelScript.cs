@@ -7,6 +7,7 @@ namespace Prefabs
         void SetName(string newName);
         void SetQuantity(string quantity);
         void DestroyPanel();
-        void SetScriptToRemoveFish(IFishPanelHandler panelHandler);
+        void SetScriptToHandlePanel(IFishPanelHandler panelHandler);
+        void SetPrice(string fishPrice);
     }
 }

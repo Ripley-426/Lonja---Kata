@@ -9,4 +9,5 @@
     int GetVehicleProductsQuantity();
     void RemoveCity(ICity cityName);
     void RemoveFish(IFish fish);
+    void ChangeVehicleCapacity(int weight);
 }

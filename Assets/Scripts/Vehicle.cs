@@ -4,12 +4,12 @@ using System.Linq;
 public class Vehicle: IVehicle
 {
     private int _totalWeight;
-    private const int Capacity = 200;
+    private int _capacity = 200;
     private readonly Dictionary<IFish, int> _currentFish = new Dictionary<IFish, int>();
     
     public int GetCapacity()
     {
-        return Capacity;
+        return _capacity;
     }
 
     public int GetWeight()
@@ -19,7 +19,7 @@ public class Vehicle: IVehicle
 
     public bool LoadProduct(IFish fish, int weight)
     {
-        if (_totalWeight + weight <= Capacity)
+        if (_totalWeight + weight <= _capacity)
         {
             _totalWeight += weight;
             AddFish(fish);
@@ -53,9 +53,14 @@ public class Vehicle: IVehicle
 
     public bool ChangeFishWeight(IFish fish, int weight)
     {
-        if (_totalWeight + weight - _currentFish[fish] > Capacity) return false;
+        if (_totalWeight + weight - _currentFish[fish] > _capacity) return false;
         _totalWeight += weight;
         _currentFish[fish] = weight;
         return true;
+    }
+
+    public void SetCapacity(int weight)
+    {
+        _totalWeight = weight;
     }
 }

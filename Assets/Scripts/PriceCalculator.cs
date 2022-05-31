@@ -72,6 +72,11 @@ public class PriceCalculator: IPriceCalculator
         RemoveFishFromExistingCities(fishName);
     }
 
+    public void ChangeVehicleCapacity(int weight)
+    {
+        _vehicle.SetCapacity(weight);
+    }
+
     private void RemoveFishFromCurrentFish(IFish fish)
     {
         _currentFish.Remove(fish);

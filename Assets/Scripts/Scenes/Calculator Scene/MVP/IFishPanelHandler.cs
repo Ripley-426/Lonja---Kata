@@ -3,6 +3,6 @@
     public interface IFishPanelHandler
     {
         void RemoveFish(string fishName);
-        void OpenModifyFishQuantityPanel(string fishName);
+        void OpenModifyFishQuantityInput(string fishName, string cityName);
     }
 }

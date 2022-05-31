@@ -112,19 +112,43 @@ namespace Tests
         public void InstantiateModifyFishQuantityPanel()
         {
             _presenter.AddNewFish("Bob");
-            _presenter.OpenModifyFishQuantityPanel("Bob");
+            _presenter.OpenModifyFishQuantityInput("Bob", "");
             
-            _view.Received(1).EnableFishWeightPanel();
+            _view.Received(1).EnableFishWeightInputPanel();
         }
         
         [Test]
         public void ModifyFishQuantityInCalculator()
         {
             _presenter.AddNewFish("Bob");
-            _presenter.OpenModifyFishQuantityPanel("Bob");
+            _presenter.OpenModifyFishQuantityInput("Bob", "");
             _presenter.ModifyFishWeight("50");
 
             _priceCalculator.ReceivedWithAnyArgs(1).ChangeFishQuantityInVehicle(default, 50);
+        }
+        
+        [Test]
+        public void InstantiateModifyMaxWeightPanel()
+        {
+            _presenter.OpenModifyMaxWeightInput();
+            
+            _view.Received(1).EnableMaxWeightInputPanel();
+        }
+        
+        [Test]
+        public void ModifyMaxWeightInPanel()
+        {
+            _presenter.ModifyMaxWeight(300.ToString());
+            
+            _view.Received(1).SetMaxWeight(300.ToString());
+        }
+        
+        [Test]
+        public void ModifyMaxWeightInCalculator()
+        {
+            _presenter.ModifyMaxWeight(300.ToString());
+
+            _priceCalculator.Received(1).ChangeVehicleCapacity(300);
         }
         
         [Test]
@@ -169,6 +193,64 @@ namespace Tests
             _presenter.AddNewCity("Bob");
             
             _priceCalculator.ReceivedWithAnyArgs(1).AddCity(default);
+        }
+
+        [Test]
+        public void IncludeAllExistingFishToNewCities()
+        {
+            IFishPanelScript fishPanelScript = Substitute.For<IFishPanelScript>();
+            _view.AddNewFishPanel("Bob").Returns(fishPanelScript);
+            
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewFish("Bob");
+            _presenter.AddNewCity("Madrid");
+
+            cityPanelScript.Received(1).AddFish("Bob");
+        }
+        
+        [Test]
+        public void IncludeNewFishToExistingCities()
+        {
+            IFishPanelScript fishPanelScript = Substitute.For<IFishPanelScript>();
+            _view.AddNewFishPanel("Bob").Returns(fishPanelScript);
+            
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewCity("Madrid");
+            _presenter.AddNewFish("Bob");
+
+            cityPanelScript.Received(1).AddFish("Bob");
+        }
+
+        [Test]
+        public void RemoveDeletedFishFromExistingCities()
+        {
+            IFishPanelScript fishPanelScript = Substitute.For<IFishPanelScript>();
+            _view.AddNewFishPanel("Bob").Returns(fishPanelScript);
+            
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewCity("Madrid");
+            _presenter.AddNewFish("Bob");
+            
+            _presenter.RemoveFish("Bob");
+
+            cityPanelScript.Received(1).RemoveFish("Bob");
+        }
+        
+        [Test]
+        public void InstantiateModifyCityDistancePanel()
+        {
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.OpenModifyCityDistanceInput("Madrid");
+            
+            _view.Received(1).EnableModifyCityDistanceInputPanel();
         }
     }
 }
