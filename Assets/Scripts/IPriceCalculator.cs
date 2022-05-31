@@ -10,4 +10,6 @@
     void RemoveCity(ICity cityName);
     void RemoveFish(IFish fish);
     void ChangeVehicleCapacity(int weight);
+    void ChangeCityDistance(ICity city, int distance);
+    void ChangeFishPrice(ICity city, IFish fish, int newPrice);
 }

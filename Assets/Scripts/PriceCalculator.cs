@@ -77,6 +77,16 @@ public class PriceCalculator: IPriceCalculator
         _vehicle.SetCapacity(weight);
     }
 
+    public void ChangeCityDistance(ICity cityToChange, int distance)
+    {
+        _cities.Find(city => city.GetName() == cityToChange.GetName()).SetDistance(distance);
+    }
+
+    public void ChangeFishPrice(ICity cityToChange, IFish fishToChange, int newPrice)
+    {
+        _cities.Find(city => city.GetName() == cityToChange.GetName()).SetProductPrice(fishToChange, newPrice);
+    }
+
     private void RemoveFishFromCurrentFish(IFish fish)
     {
         _currentFish.Remove(fish);

@@ -58,7 +58,7 @@ namespace Scenes.Calculator_Scene.MVP
 
         public void CalculateBestSellingSpot()
         {
-            throw new System.NotImplementedException();
+            Debug.Log(_priceCalculator.GetBestCityToSell().GetName());
         }
 
         public void AddNewFish(string fishName)
@@ -93,6 +93,7 @@ namespace Scenes.Calculator_Scene.MVP
 
         public void ModifyFishPrice(string fishPrice)
         {
+            _priceCalculator.ChangeFishPrice(GetCity(_currentCity), GetFish(_currentFish), int.Parse(fishPrice));
             _cities[GetCity(_currentCity)].SetFishPrice(_currentFish, fishPrice);
             _view.CloseInputPanel();
         }
@@ -143,6 +144,7 @@ namespace Scenes.Calculator_Scene.MVP
         public void ModifyCityDistance(string distance)
         {
             if (distance == "") return;
+            _priceCalculator.ChangeCityDistance(GetCity(_currentCity), int.Parse(distance));
             _cities[GetCity(_currentCity)].SetDistance(distance);
             _view.CloseInputPanel();
         }

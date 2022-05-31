@@ -252,5 +252,50 @@ namespace Tests
             
             _view.Received(1).EnableModifyCityDistanceInputPanel();
         }
+        
+        [Test]
+        public void ChangeCityDistanceInCalculator()
+        {
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewCity("Madrid");
+            _presenter.OpenModifyCityDistanceInput("Madrid");
+            _presenter.ModifyCityDistance("300");
+
+            _priceCalculator.ReceivedWithAnyArgs(1).ChangeCityDistance(default, 300);
+        }
+        
+        [Test]
+        public void ChangeFishPriceInCalculator()
+        {
+            IFishPanelScript fishPanelScript = Substitute.For<IFishPanelScript>();
+            _view.AddNewFishPanel("Bob").Returns(fishPanelScript);
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewFish("Bob");
+            _presenter.AddNewCity("Madrid");
+            _presenter.OpenModifyFishQuantityInput("Bob", "Madrid");
+            _presenter.ModifyFishPrice("350");
+
+            _priceCalculator.ReceivedWithAnyArgs(1).ChangeFishPrice(default,default, 350);
+        }
+        
+        [Test]
+        public void CalculateBestCityToSell()
+        {
+            IFishPanelScript fishPanelScript = Substitute.For<IFishPanelScript>();
+            _view.AddNewFishPanel("Bob").Returns(fishPanelScript);
+            ICityPanelScript cityPanelScript = Substitute.For<ICityPanelScript>();
+            _view.AddNewCityPanel("Madrid").Returns(cityPanelScript);
+            
+            _presenter.AddNewFish("Bob");
+            _presenter.AddNewCity("Madrid");
+            _presenter.OpenModifyFishQuantityInput("Bob", "Madrid");
+            _presenter.ModifyFishPrice("350");
+
+            _priceCalculator.ReceivedWithAnyArgs(1).ChangeFishPrice(default,default, 350);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class City: ICity
 {
@@ -51,9 +52,9 @@ public class City: ICity
         return _distance / 100;
     }
 
-    public void SetProductPrice(IFish fishName, int price)
+    public void SetProductPrice(IFish fish, int price)
     {
-        _fishPrices[fishName] = price;
+        _fishPrices[fish] = price;
     }
 
     public void RemoveFish(IFish fishName)
